@@ -21,27 +21,31 @@ export default function HomePage() {
   return (
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-10"></div>
+        {/* Background pattern subtil */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full"></div>
+          <div className="absolute top-32 right-20 w-20 h-20 border border-white/10 rounded-full"></div>
+          <div className="absolute bottom-20 left-20 w-40 h-40 border border-white/10 rounded-full"></div>
+        </div>
         
         <div className="relative z-10 px-4 pt-8 pb-8">
           {/* Header avec salutation */}
           <div className="text-center space-y-4 mb-12">
             <div className="mb-6">
-              <h1 className="text-4xl font-bold text-white font-psg mb-2">
+              <h1 className="text-4xl font-bold text-white font-satoshi mb-2 tracking-tight leading-tight">
                 Salut Jordan ! 👋
               </h1>
-              <div className="text-psg-blue-100">
-                <div className="text-lg font-medium">
+              <div className="text-psg-blue-100 font-jakarta">
+                <div className="text-lg font-medium tracking-wide">
                   {currentTime.toLocaleDateString('fr-FR', {
                     weekday: 'long',
                     day: 'numeric',
                     month: 'long'
                   })}
                 </div>
-                <div className="text-2xl font-mono font-bold text-white mt-1 flex items-center justify-center space-x-2">
+                <div className="text-2xl font-semibold text-white mt-1 flex items-center justify-center space-x-2 tracking-wider">
                   <Clock className="h-5 w-5" />
-                  <span>
+                  <span className="font-mono">
                     {currentTime.toLocaleTimeString('fr-FR', {
                       hour: '2-digit',
                       minute: '2-digit'
@@ -54,11 +58,11 @@ export default function HomePage() {
 
           {/* Action principale */}
           <div className="text-center mb-8">
-            <p className="text-psg-blue-100 text-lg mb-6 font-medium">
+            <p className="text-psg-blue-100 text-lg mb-6 font-medium font-jakarta tracking-wide">
               Besoin d'un transport ?
             </p>
             <Link href="/request">
-              <button className="w-full max-w-sm mx-auto bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-bold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400">
+              <button className="w-full max-w-sm mx-auto bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-semibold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400 font-satoshi tracking-wide">
                 <Plus className="h-8 w-8" />
                 <span>Demander une course</span>
               </button>
@@ -88,11 +92,11 @@ export default function HomePage() {
               Urgence ou question ?
             </p>
             <a 
-              href="tel:+33680807979" 
+              href="tel:+33123456789" 
               className="inline-flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105 mb-4"
             >
               <Phone className="h-5 w-5" />
-              <span>Appeler Curtis</span>
+              <span>Appeler Ryless</span>
             </a>
 
             {/* Lien vers l'historique */}

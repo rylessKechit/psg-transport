@@ -77,7 +77,7 @@ function generateEmailHTML(rideData: any) {
       <div class="container">
         <div class="header">
           <h1>🚗 Nouvelle demande de course</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Jordan PSG Transport</p>
+          <p style="margin: 10px 0 0 0; opacity: 0.9;">Jordan YSG Transport</p>
         </div>
         
         <div class="content">
@@ -159,7 +159,7 @@ function generateEmailHTML(rideData: any) {
         </div>
         
         <div class="footer">
-          <p>Email automatique envoyé depuis PSG Transport Platform</p>
+          <p>Email automatique envoyé depuis YSG Transport Platform</p>
           <p>Demande reçue le ${new Date().toLocaleString('fr-FR')}</p>
         </div>
       </div>

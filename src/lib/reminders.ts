@@ -139,7 +139,7 @@ function generateReminderHTML(rideData: any, hoursLeft: number) {
         </div>
         
         <div class="footer">
-          <p>Rappel automatique PSG Transport</p>
+          <p>Rappel automatique YSG Transport</p>
           <p>Envoyé le ${new Date().toLocaleString('fr-FR')}</p>
         </div>
       </div>
@@ -250,7 +250,7 @@ export async function sendReminders2h() {
 
 // Fonction pour exécuter tous les rappels
 export async function processReminders() {
-  console.log('Traitement des rappels PSG Transport...');
+  console.log('Traitement des rappels YSG Transport...');
   await sendReminders10h();
   await sendReminders2h();
   console.log('Rappels traités.');
