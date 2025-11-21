@@ -321,3 +321,51 @@
     @apply pt-safe-area-inset-top;
   }
 }
+
+/* PSG Watermark effects */
+.psg-watermark-main {
+  background-image: url('/logo-psg-watermark.webp');
+  background-size: 400px 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  mix-blend-mode: screen;
+}
+
+.psg-watermark-pattern {
+  background-image: 
+    url('/logo-psg-watermark.webp'),
+    url('/logo-psg-watermark.webp'),
+    url('/logo-psg-watermark.webp');
+  background-size: 120px 120px;
+  background-position: 
+    0% 0%, 
+    50% 50%, 
+    100% 100%;
+  background-repeat: repeat;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}
+
+.bg-psg-transparent {
+  background: linear-gradient(135deg, 
+    rgba(0, 65, 112, 0.85) 0%, 
+    rgba(85, 107, 255, 0.80) 50%, 
+    rgba(0, 65, 112, 0.85) 100%);
+}
+
+/* Animation subtile du watermark */
+@keyframes float-logo {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.08;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(1deg);
+    opacity: 0.12;
+  }
+}
+
+.psg-watermark-animated {
+  animation: float-logo 20s ease-in-out infinite;
+}

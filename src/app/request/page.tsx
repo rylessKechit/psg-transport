@@ -32,7 +32,7 @@ const locations = [
   },
   { 
     id: 'domicile', 
-    name: 'Domicile', 
+    name: 'Domicile Jordan', 
     wazeLink: 'https://waze.com/ul/hu09tkg0mu'
   }
 ];
@@ -86,7 +86,7 @@ export default function RequestPage() {
         throw new Error('Erreur lors de l\'envoi');
       }
     } catch (error) {
-      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Curtis.');
+      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Ryless.');
     } finally {
       setLoading(false);
     }
@@ -244,7 +244,7 @@ export default function RequestPage() {
 
             {/* Info */}
             <div className="text-center text-psg-blue-100 text-sm space-y-2">
-              <p>✅ Curtis recevra ta demande instantanément</p>
+              <p>✅ Ryless recevra ta demande instantanément</p>
               <p>📱 Réponse très rapide garantie !</p>
             </div>
           </form>

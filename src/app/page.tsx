@@ -21,11 +21,23 @@ export default function HomePage() {
   return (
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative overflow-hidden">
+        {/* Logo PSG en watermark subtil et propre */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div 
+            className="w-80 h-80 opacity-5 bg-no-repeat bg-center bg-contain"
+            style={{
+              backgroundImage: "url('/logo-psg-watermark.webp')",
+              filter: 'blur(0.5px)',
+            }}
+          />
+        </div>
+
         {/* Background pattern subtil */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full"></div>
           <div className="absolute top-32 right-20 w-20 h-20 border border-white/10 rounded-full"></div>
           <div className="absolute bottom-20 left-20 w-40 h-40 border border-white/10 rounded-full"></div>
+          <div className="absolute bottom-40 right-10 w-24 h-24 border border-white/15 rounded-full"></div>
         </div>
         
         <div className="relative z-10 px-4 pt-8 pb-8">
