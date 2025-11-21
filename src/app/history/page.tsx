@@ -43,13 +43,13 @@ export default function HistoryPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
       case 'completed':
-        return <CheckCircle className="h-5 w-5 text-blue-600" />;
+        return <CheckCircle className="h-4 w-4 text-blue-600" />;
       case 'cancelled':
-        return <XCircle className="h-5 w-5 text-red-600" />;
+        return <XCircle className="h-4 w-4 text-red-600" />;
       default:
-        return <AlertCircle className="h-5 w-5 text-yellow-600" />;
+        return <AlertCircle className="h-4 w-4 text-yellow-600" />;
     }
   };
 
@@ -108,10 +108,10 @@ export default function HistoryPage() {
   if (loading) {
     return (
       <Layout>
-        <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 flex items-center justify-center">
+        <div className="h-full flex items-center justify-center">
           <div className="text-white text-center">
             <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-            <p>Chargement des courses...</p>
+            <p className="font-playfair text-xl">Chargement des courses...</p>
           </div>
         </div>
       </Layout>
@@ -120,33 +120,33 @@ export default function HistoryPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative">
-        <div className="relative z-10 px-4 pt-6 pb-8">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <Link href="/" className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="font-medium">Retour</span>
+      <div className="h-full overflow-y-auto">
+        <div className="container-compact relative z-10 py-6">
+          {/* Header PLUS GRAND */}
+          <div className="flex items-center justify-between mb-6">
+            <Link href="/" className="flex items-center space-x-2 text-white hover:text-yellow-300">
+              <ArrowLeft className="h-6 w-6" />
+              <span className="font-medium font-playfair text-lg">Retour</span>
             </Link>
-            <h1 className="text-xl font-bold text-white font-psg">Historique</h1>
-            <div className="w-16"></div>
+            <h1 className="font-playfair text-2xl font-bold text-white">Historique</h1>
+            <div className="w-20"></div>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-4 mb-6 max-w-md mx-auto">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-psg-blue-900">{upcomingCount}</div>
-              <div className="text-sm text-psg-blue-600">À venir</div>
+          {/* Stats PLUS GRANDES */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="card-simple p-5 text-center">
+              <div className="text-3xl font-bold text-gray-900 font-playfair">{upcomingCount}</div>
+              <div className="text-lg text-gray-600 font-playfair">À venir</div>
             </div>
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-psg-blue-900">{pastCount}</div>
-              <div className="text-sm text-psg-blue-600">Passées</div>
+            <div className="card-simple p-5 text-center">
+              <div className="text-3xl font-bold text-gray-900 font-playfair">{pastCount}</div>
+              <div className="text-lg text-gray-600 font-playfair">Passées</div>
             </div>
           </div>
 
-          {/* Filtres */}
+          {/* Filtres AMÉLIORÉS avec MEILLEURS contrastes */}
           <div className="flex justify-center mb-6">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-2 flex space-x-2">
+            <div className="flex space-x-2">
               {[
                 { key: 'all', label: 'Toutes' },
                 { key: 'upcoming', label: 'À venir' },
@@ -155,10 +155,10 @@ export default function HistoryPage() {
                 <button
                   key={key}
                   onClick={() => setFilter(key as any)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 font-playfair text-lg border-2 ${
                     filter === key 
-                      ? 'bg-psg-blue-600 text-white shadow-md' 
-                      : 'text-psg-blue-600 hover:bg-psg-blue-50'
+                      ? 'btn-history-active' 
+                      : 'btn-history-inactive'
                   }`}
                 >
                   {label}
@@ -167,86 +167,86 @@ export default function HistoryPage() {
             </div>
           </div>
 
-          {/* Liste des courses */}
-          <div className="max-w-md mx-auto space-y-4">
+          {/* Liste des courses PLUS GRANDE */}
+          <div className="space-large">
             {filteredRides.length === 0 ? (
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 text-center">
-                <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">
+              <div className="card-simple p-8 text-center">
+                <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="font-playfair font-bold text-gray-700 mb-4 text-2xl">
                   {filter === 'upcoming' ? 'Aucune course à venir' : 
                    filter === 'past' ? 'Aucune course passée' : 'Aucune course'}
                 </h3>
-                <p className="text-gray-500 mb-4">
+                <p className="text-gray-500 mb-6 font-playfair text-lg">
                   {filter === 'all' ? 'Jordan n\'a pas encore programmé de course.' : ''}
                 </p>
                 <Link href="/request">
-                  <button className="bg-psg-red text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition-colors">
+                  <button className="bg-psg-red text-white px-8 py-4 rounded-xl font-semibold hover:bg-red-600 transition-colors font-playfair text-lg">
                     Programmer une course
                   </button>
                 </Link>
               </div>
             ) : (
               filteredRides.map((ride) => (
-                <div key={ride._id} className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-                  {/* En-tête de la course */}
+                <div key={ride._id} className="card-simple p-6 shadow-lg">
+                  {/* En-tête PLUS GROS */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="h-4 w-4 text-psg-blue-600" />
-                      <span className="text-sm font-medium text-gray-700">
+                    <div className="flex items-center space-x-3">
+                      <Calendar className="h-6 w-6 text-psg-blue" />
+                      <span className="text-lg font-medium text-gray-700 font-playfair">
                         {formatDate(ride.date)}
                       </span>
                     </div>
-                    <div className={`flex items-center space-x-2 px-3 py-1 rounded-full border ${getStatusBg(ride.status)}`}>
+                    <div className={`flex items-center space-x-2 px-3 py-2 rounded-full border font-semibold ${getStatusBg(ride.status)}`}>
                       {getStatusIcon(ride.status)}
-                      <span className="text-xs font-semibold">
+                      <span className="font-playfair text-sm">
                         {getStatusText(ride.status)}
                       </span>
                     </div>
                   </div>
 
-                  {/* Heure */}
-                  <div className="flex items-center space-x-2 mb-4">
-                    <Clock className="h-5 w-5 text-psg-blue-600" />
-                    <span className="text-lg font-bold text-psg-blue-900">
+                  {/* Heure PLUS GRANDE */}
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Clock className="h-6 w-6 text-psg-blue" />
+                    <span className="text-2xl font-bold text-gray-900 font-playfair">
                       {ride.time}
                     </span>
                     {isUpcoming(ride.date, ride.time) && (
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                      <span className="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm font-medium font-playfair">
                         À venir
                       </span>
                     )}
                   </div>
 
-                  {/* Trajet */}
-                  <div className="bg-gradient-to-r from-psg-blue-50 to-red-50 p-4 rounded-xl mb-4">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-psg-blue-600 rounded-full"></div>
-                        <span className="font-medium text-psg-blue-900">{ride.departure}</span>
+                  {/* Trajet PLUS GROS */}
+                  <div className="bg-gradient-to-r from-green-50 to-red-50 p-5 rounded-xl mb-4">
+                    <div className="flex items-center justify-between text-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-4 h-4 bg-green-600 rounded-full"></div>
+                        <span className="font-medium text-gray-900 font-playfair">{ride.departure}</span>
                       </div>
-                      <div className="flex-1 border-t border-dashed border-gray-400 mx-4"></div>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-psg-red">{ride.destination}</span>
-                        <div className="w-3 h-3 bg-psg-red rounded-full"></div>
+                      <div className="flex-1 border-t-2 border-dashed border-gray-400 mx-4"></div>
+                      <div className="flex items-center space-x-3">
+                        <span className="font-medium text-red-600 font-playfair">{ride.destination}</span>
+                        <div className="w-4 h-4 bg-red-600 rounded-full"></div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Notes */}
+                  {/* Notes PLUS GRANDES */}
                   {ride.notes && (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
-                      <div className="flex items-start space-x-2">
-                        <MapPin className="h-4 w-4 text-yellow-600 mt-0.5" />
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                      <div className="flex items-start space-x-3">
+                        <MapPin className="h-5 w-5 text-yellow-600 mt-1" />
                         <div>
-                          <div className="text-xs font-medium text-yellow-800 mb-1">Notes :</div>
-                          <div className="text-sm text-yellow-700">{ride.notes}</div>
+                          <div className="text-sm font-medium text-yellow-800 mb-2 font-playfair">Notes :</div>
+                          <div className="text-lg text-yellow-700 font-playfair">{ride.notes}</div>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* Date de création */}
-                  <div className="text-xs text-gray-500 text-center">
+                  {/* Date de création PLUS GRANDE */}
+                  <div className="text-sm text-gray-500 text-center font-playfair">
                     Demandée le {new Date(ride.createdAt).toLocaleDateString('fr-FR', {
                       day: 'numeric',
                       month: 'long',
@@ -259,12 +259,12 @@ export default function HistoryPage() {
             )}
           </div>
 
-          {/* Bouton flottant pour nouvelle course */}
+          {/* Bouton flottant PLUS GROS */}
           {filteredRides.length > 0 && (
-            <div className="fixed bottom-8 right-4 z-50">
+            <div className="fixed bottom-8 right-6 z-50">
               <Link href="/request">
-                <button className="bg-gradient-to-r from-psg-red to-red-600 text-white p-4 rounded-full shadow-2xl hover:shadow-red-500/25 transform hover:scale-110 transition-all duration-300">
-                  <Calendar className="h-6 w-6" />
+                <button className="bg-gradient-to-r from-psg-red to-red-600 text-white p-5 rounded-full shadow-2xl hover:shadow-red-500/25 transform hover:scale-110 transition-all duration-300">
+                  <Calendar className="h-8 w-8" />
                 </button>
               </Link>
             </div>

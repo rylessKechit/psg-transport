@@ -1,38 +1,5 @@
-/* Import Google Fonts pour PSG */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-
-/* Polices Satoshi locales */
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Light.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Import Google Fonts + Playfair Display */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -40,332 +7,156 @@
 
 @layer base {
   :root {
-    /* shadcn/ui CSS Variables */
+    /* Variables de base */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 240 10% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 10% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 200 100% 22%; /* Bleu PSG en HSL */
+    --popover-foreground: 240 10% 15%;
+    --primary: 200 100% 22%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary-foreground: 240 10% 15%;
     --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 240 6% 50%;
     --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent-foreground: 240 10% 15%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 200 100% 22%; /* Bleu PSG */
+    --ring: 200 100% 22%;
     --radius: 0.5rem;
 
-    /* Variables PSG personnalisées */
-    --psg-blue: #004170;
-    --psg-blue-light: #556bff;
-    --psg-red: #E1000F;
-    --psg-gold: #FFD700;
-    --psg-gradient: linear-gradient(135deg, #004170 0%, #556bff 100%);
-    --psg-shadow: 0 4px 20px rgba(0, 65, 112, 0.15);
+    /* VRAIS couleurs PSG */
+    --psg-blue: #004070;     /* Bleu PSG officiel CORRECT */
+    --psg-blue-dark: #002040; /* Plus foncé */
+    --psg-red: #E1000F;      /* Rouge PSG */
+    --psg-gold: #FFD700;     /* Or PSG */
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 200 100% 40%; /* Bleu PSG plus clair en dark mode */
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 200 100% 40%;
-
-    /* Variables PSG dark mode */
-    --psg-blue: #556bff;
-    --psg-blue-light: #7e93ff;
-    --psg-red: #ff4757;
-    --psg-gold: #FFD700;
-    --psg-gradient: linear-gradient(135deg, #556bff 0%, #7e93ff 100%);
-    --psg-shadow: 0 4px 20px rgba(85, 107, 255, 0.2);
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-jakarta;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    font-variant-ligatures: common-ligatures;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Background avec overlay PLUS TRANSPARENT */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    background: 
+      linear-gradient(
+        135deg, 
+        rgba(0, 64, 112, 0.70) 0%, 
+        rgba(0, 32, 64, 0.65) 50%, 
+        rgba(0, 64, 112, 0.70) 100%
+      ),
+      url('/logo-psg-watermark.png');
+    background-size: auto, 425px 425px;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: fixed, fixed;
+    font-family: 'Playfair Display', serif;
+    color: white;
   }
 
-  /* Styles de base optimisés pour mobile */
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: white;
+    margin: 0;
   }
 
-  /* Amélioration des interactions tactiles */
-  button, 
-  [role="button"],
-  input,
-  select,
-  textarea {
-    @apply touch-manipulation;
-  }
-
-  /* Focus visible amélioré pour l'accessibilité */
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-psg-blue-500;
+  p, span, div {
+    margin: 0;
+    color: white;
   }
 }
 
 @layer components {
-  /* Composants PSG personnalisés */
-  .btn-psg-primary {
-    @apply bg-psg-blue-900 hover:bg-psg-blue-800 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-psg hover:shadow-lg hover:scale-105 active:scale-95;
+  /* Bouton principal PSG */
+  .btn-psg {
+    @apply w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:scale-105;
   }
 
-  .btn-psg-secondary {
-    @apply bg-white hover:bg-gray-50 text-psg-blue-900 font-medium px-6 py-3 rounded-lg border-2 border-psg-blue-900 transition-all duration-200 hover:bg-psg-blue-900 hover:text-white;
+  /* Card avec fond BLANC et texte NOIR - contraste parfait */
+  .card-simple {
+    @apply bg-white/95 backdrop-blur-sm rounded-xl border border-white/80 shadow-xl;
+    color: #1a1a2e !important;
   }
 
-  .btn-psg-gold {
-    @apply bg-psg-gold hover:bg-yellow-500 text-psg-blue-900 font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+  .card-simple * {
+    color: #1a1a2e !important;
   }
 
-  .card-psg {
-    @apply bg-white rounded-xl shadow-psg border border-gray-100 p-6 transition-all duration-200 hover:shadow-xl;
+  .card-simple h3 {
+    color: #1a1a2e !important;
   }
 
-  .input-psg {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-colors duration-200 placeholder-gray-400;
+  .card-simple p {
+    color: #4a5568 !important;
   }
 
-  .select-psg {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-colors duration-200 bg-white;
+  .card-simple input,
+  .card-simple select,
+  .card-simple textarea,
+  .card-simple button {
+    color: #1a1a2e !important;
   }
 
-  /* Container pour les pages principales */
-  .container-psg {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  /* Select avec texte NOIR visible */
+  .card-simple [role="combobox"] {
+    color: #1a1a2e !important;
+    background-color: white !important;
   }
 
-  /* Header PSG */
-  .header-psg {
-    @apply bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm;
+  .card-simple [role="combobox"] * {
+    color: #1a1a2e !important;
   }
 
-  /* Layout pour mobile */
-  .mobile-layout {
-    @apply min-h-screen bg-gray-50 pb-safe-area-inset-bottom;
+  /* Container compact */
+  .container-compact {
+    @apply max-w-md mx-auto px-4;
   }
 
-  /* Animations pour les notifications */
-  .notification-enter {
-    @apply animate-slide-in;
+  /* Textes forcés blancs sur fond bleu */
+  .text-white-forced {
+    color: white !important;
   }
 
-  .notification-success {
-    @apply bg-green-50 border-green-200 text-green-800;
+  .text-white-forced * {
+    color: white !important;
   }
 
-  .notification-error {
-    @apply bg-red-50 border-red-200 text-red-800;
+  /* Espaces plus grands pour textes plus gros */
+  .space-large {
+    @apply space-y-6;
   }
 
-  .notification-psg {
-    @apply bg-psg-blue-50 border-psg-blue-200 text-psg-blue-900;
-  }
-}
-
-@layer utilities {
-  /* Utilities PSG personnalisées */
-  .text-psg-gradient {
-    background: linear-gradient(135deg, var(--psg-blue) 0%, var(--psg-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Boutons History avec meilleurs contrastes */
+  .btn-history-active {
+    @apply bg-white text-gray-900 shadow-lg border-2 border-blue-600;
   }
 
-  .bg-psg-gradient {
-    background: var(--psg-gradient);
-  }
-
-  .shadow-psg {
-    box-shadow: var(--psg-shadow);
-  }
-
-  /* Safe area pour iPhone */
-  .pb-safe-area-inset-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .pt-safe-area-inset-top {
-    padding-top: env(safe-area-inset-top);
-  }
-
-  /* Scroll personnalisé */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scrollbar-psg::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .scrollbar-psg::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 3px;
-  }
-
-  .scrollbar-psg::-webkit-scrollbar-thumb {
-    background: var(--psg-blue);
-    border-radius: 3px;
-  }
-
-  .scrollbar-psg::-webkit-scrollbar-thumb:hover {
-    background: var(--psg-blue-light);
-  }
-
-  /* Animations personnalisées */
-  .animate-pulse-psg {
-    animation: pulse-psg 2s infinite;
-  }
-
-  @keyframes pulse-psg {
-    0%, 100% {
-      background-color: var(--psg-blue);
-      transform: scale(1);
-    }
-    50% {
-      background-color: var(--psg-blue-light);
-      transform: scale(1.05);
-    }
-  }
-
-  /* States interactifs améliorés */
-  .interactive {
-    @apply transition-all duration-200 ease-out;
-  }
-
-  .interactive:hover {
-    @apply scale-105;
-  }
-
-  .interactive:active {
-    @apply scale-95;
-  }
-
-  /* Glass effect pour les overlays */
-  .glass-psg {
-    @apply backdrop-blur-md bg-white/80 border border-white/20 shadow-lg;
-  }
-
-  /* Responsive text sizing */
-  .text-responsive-xl {
-    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
-  }
-
-  .text-responsive-lg {
-    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
-  }
-
-  .text-responsive-base {
-    @apply text-base sm:text-lg md:text-xl;
+  .btn-history-inactive {
+    @apply bg-transparent text-white border-2 border-white/50 hover:bg-white/20;
   }
 }
 
-/* Styles spécifiques pour les composants shadcn/ui */
-.toast[data-state="open"][data-swipe-direction="right"] {
-  animation: slide-in 150ms ease-out;
-}
-
-/* Print styles pour les rapports futurs */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  .print-psg {
-    @apply text-black bg-white;
-  }
-}
-
-/* Styles pour les PWA (futur) */
-@media (display-mode: standalone) {
-  .pwa-header {
-    @apply pt-safe-area-inset-top;
-  }
-}
-
-/* PSG Watermark effects */
-.psg-watermark-main {
-  background-image: url('/logo-psg-watermark.webp');
-  background-size: 400px 400px;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.08;
-  mix-blend-mode: screen;
-}
-
-.psg-watermark-pattern {
-  background-image: 
-    url('/logo-psg-watermark.webp'),
-    url('/logo-psg-watermark.webp'),
-    url('/logo-psg-watermark.webp');
-  background-size: 120px 120px;
-  background-position: 
-    0% 0%, 
-    50% 50%, 
-    100% 100%;
-  background-repeat: repeat;
-  opacity: 0.03;
-  mix-blend-mode: overlay;
-}
-
-.bg-psg-transparent {
-  background: linear-gradient(135deg, 
-    rgba(0, 65, 112, 0.85) 0%, 
-    rgba(85, 107, 255, 0.80) 50%, 
-    rgba(0, 65, 112, 0.85) 100%);
-}
-
-/* Animation subtile du watermark */
-@keyframes float-logo {
+/* Animation watermark - plus subtile */
+@keyframes gentle-pulse {
   0%, 100% { 
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.08;
+    opacity: 0.25;
+    transform: scale(1);
   }
   50% { 
-    transform: translateY(-10px) rotate(1deg);
-    opacity: 0.12;
+    opacity: 0.35;
+    transform: scale(1.01);
   }
 }
 
-.psg-watermark-animated {
-  animation: float-logo 20s ease-in-out infinite;
+.psg-watermark {
+  animation: gentle-pulse 10s ease-in-out infinite;
 }

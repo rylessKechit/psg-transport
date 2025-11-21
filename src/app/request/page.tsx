@@ -25,16 +25,8 @@ import {
 } from "@/components/ui/select";
 
 const locations = [
-  { 
-    id: 'campus', 
-    name: 'Campus PSG', 
-    wazeLink: 'https://waze.com/ul/hu09qmbevr'
-  },
-  { 
-    id: 'domicile', 
-    name: 'Domicile Jordan', 
-    wazeLink: 'https://waze.com/ul/hu09tkg0mu'
-  }
+  { id: 'campus', name: 'Campus PSG', wazeLink: 'https://waze.com/ul/hu09qmbevr' },
+  { id: 'domicile', name: 'Domicile Jordan', wazeLink: 'https://waze.com/ul/hu09tkg0mu' }
 ];
 
 const timeSlots = [
@@ -79,14 +71,13 @@ export default function RequestPage() {
       });
 
       if (response.ok) {
-        // Succès !
-        alert('🎉 Course demandée avec succès ! Tu recevras une confirmation très bientôt.');
+        alert('🎉 Course demandée avec succès !');
         router.push('/');
       } else {
         throw new Error('Erreur lors de l\'envoi');
       }
     } catch (error) {
-      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Ryless.');
+      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau.');
     } finally {
       setLoading(false);
     }
@@ -94,37 +85,41 @@ export default function RequestPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative">
-        <div className="relative z-10 px-4 pt-6 pb-8">
-          {/* Header avec retour */}
-          <div className="flex items-center justify-between mb-8">
-            <Link href="/" className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="font-medium">Retour</span>
+      <div className="h-full overflow-y-auto">
+
+        <div className="container-compact relative z-10 py-6">
+          {/* Header navigation - PLUS GRAND */}
+          <div className="flex items-center justify-between mb-6">
+            <Link href="/" className="flex items-center space-x-2 text-white hover:text-yellow-300">
+              <ArrowLeft className="h-6 w-6" />
+              <span className="font-medium font-playfair text-white text-lg">Retour</span>
             </Link>
-            <h1 className="text-xl font-bold text-white font-psg">Nouvelle course</h1>
-            <div className="w-16"></div>
+            <h1 className="font-playfair text-2xl font-bold text-white">Nouvelle Course</h1>
+            <div className="w-20"></div>
           </div>
 
-          {/* Formulaire */}
-          <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
-            {/* Date avec Calendar Picker */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
-                <Calendar className="h-5 w-5 text-psg-blue-600" />
-                <span>Date de la course *</span>
+          {/* Formulaire avec PLUS GROS TEXTES */}
+          <form onSubmit={handleSubmit} className="space-large">
+            
+            {/* Date */}
+            <div className="card-simple p-5">
+              <label className="flex items-center space-x-3 text-gray-900 font-semibold mb-4 font-playfair text-lg">
+                <Calendar className="h-6 w-6 text-blue-600" />
+                <span className="text-gray-900">Date *</span>
               </label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-full h-14 justify-start text-left font-normal text-lg border border-gray-200 rounded-xl hover:border-psg-blue-500 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200",
-                      !date && "text-muted-foreground"
+                      "w-full h-14 justify-start text-left font-medium font-playfair text-gray-900 bg-white border-gray-300 text-lg",
+                      !date && "text-gray-500"
                     )}
                   >
-                    <CalendarIcon className="mr-3 h-5 w-5 text-psg-blue-600" />
-                    {date ? format(date, "EEEE dd MMMM yyyy", { locale: fr }) : "Choisir une date"}
+                    <CalendarIcon className="mr-3 h-5 w-5 text-gray-700" />
+                    <span className="text-gray-900">
+                      {date ? format(date, "EEEE dd MMMM yyyy", { locale: fr }) : "Choisir une date"}
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -135,118 +130,99 @@ export default function RequestPage() {
                     disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
                     locale={fr}
                     className="rounded-md border-0"
-                    classNames={{
-                      day_selected: "bg-psg-blue-600 text-white hover:bg-psg-blue-700",
-                      day_today: "bg-psg-blue-100 text-psg-blue-900 font-semibold",
-                    }}
                   />
                 </PopoverContent>
               </Popover>
             </div>
 
             {/* Heure */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
-                <Clock className="h-5 w-5 text-psg-blue-600" />
-                <span>Heure *</span>
+            <div className="card-simple p-5">
+              <label className="flex items-center space-x-3 text-gray-900 font-semibold mb-4 font-playfair text-lg">
+                <Clock className="h-6 w-6 text-green-600" />
+                <span className="text-gray-900">Heure *</span>
               </label>
               <Select value={formData.time} onValueChange={(value) => setFormData({...formData, time: value})}>
-                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
-                  <SelectValue placeholder="Choisir l'heure" />
+                <SelectTrigger className="w-full h-14 font-playfair text-gray-900 bg-white border-gray-300 text-lg">
+                  <SelectValue placeholder="Choisir l'heure" className="text-gray-900" />
                 </SelectTrigger>
-                <SelectContent className="max-h-60">
+                <SelectContent className="max-h-40 bg-white">
                   {timeSlots.map(time => (
-                    <SelectItem key={time} value={time} className="text-lg py-3">
-                      {time}
-                    </SelectItem>
+                    <SelectItem key={time} value={time} className="font-playfair text-gray-900 hover:bg-gray-100 text-lg">{time}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             {/* Départ */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
-                <MapPin className="h-5 w-5 text-psg-blue-600" />
-                <span>Point de départ *</span>
+            <div className="card-simple p-5">
+              <label className="flex items-center space-x-3 text-gray-900 font-semibold mb-4 font-playfair text-lg">
+                <MapPin className="h-6 w-6 text-emerald-600" />
+                <span className="text-gray-900">Départ *</span>
               </label>
               <Select value={formData.departure} onValueChange={(value) => setFormData({...formData, departure: value})}>
-                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
-                  <SelectValue placeholder="D'où pars-tu ?" />
+                <SelectTrigger className="w-full h-14 font-playfair text-gray-900 bg-white border-gray-300 text-lg">
+                  <SelectValue placeholder="D'où ?" className="text-gray-900" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   {locations.map(location => (
-                    <SelectItem key={location.id} value={location.name} className="text-lg py-3">
-                      <div className="flex items-center space-x-2">
-                        <span>{location.name}</span>
-                      </div>
-                    </SelectItem>
+                    <SelectItem key={location.id} value={location.name} className="font-playfair text-gray-900 hover:bg-gray-100 text-lg">{location.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             {/* Destination */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
-                <MapPin className="h-5 w-5 text-psg-red" />
-                <span>Destination *</span>
+            <div className="card-simple p-5">
+              <label className="flex items-center space-x-3 text-gray-900 font-semibold mb-4 font-playfair text-lg">
+                <MapPin className="h-6 w-6 text-red-600" />
+                <span className="text-gray-900">Destination *</span>
               </label>
               <Select value={formData.destination} onValueChange={(value) => setFormData({...formData, destination: value})}>
-                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
-                  <SelectValue placeholder="Où vas-tu ?" />
+                <SelectTrigger className="w-full h-14 font-playfair text-gray-900 bg-white border-gray-300 text-lg">
+                  <SelectValue placeholder="Vers où ?" className="text-gray-900" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   {locations.map(location => (
-                    <SelectItem key={location.id} value={location.name} className="text-lg py-3">
-                      <div className="flex items-center space-x-2">
-                        <span>{location.name}</span>
-                      </div>
-                    </SelectItem>
+                    <SelectItem key={location.id} value={location.name} className="font-playfair text-gray-900 hover:bg-gray-100 text-lg">{location.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            {/* Notes (optionnel) */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
-                <MessageSquare className="h-5 w-5 text-psg-blue-600" />
-                <span>Notes (optionnel)</span>
+            {/* Notes */}
+            <div className="card-simple p-5">
+              <label className="flex items-center space-x-3 text-gray-900 font-semibold mb-4 font-playfair text-lg">
+                <MessageSquare className="h-6 w-6 text-amber-600" />
+                <span className="text-gray-900">Notes (optionnel)</span>
               </label>
               <textarea
                 value={formData.notes}
                 onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                placeholder="Ex: Match important, bagages, heure précise..."
-                className="w-full p-4 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-all duration-200 min-h-[100px] resize-none"
+                placeholder="Notes rapides..."
+                className="w-full p-4 border border-gray-300 rounded-lg resize-none h-24 font-playfair text-gray-900 placeholder-gray-500 bg-white text-lg"
                 rows={3}
               />
             </div>
 
-            {/* Bouton d'envoi */}
+            {/* Bouton d'envoi PLUS GROS */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-bold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400 disabled:opacity-50 disabled:transform-none disabled:hover:shadow-none"
+              className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-6 px-8 rounded-xl transition-all duration-300 flex items-center justify-center space-x-4 shadow-xl hover:shadow-2xl transform hover:scale-105 font-playfair disabled:opacity-50 text-xl"
             >
               {loading ? (
                 <>
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                  <span>Envoi en cours...</span>
+                  <Loader2 className="h-6 w-6 animate-spin text-white" />
+                  <span className="text-white">Envoi...</span>
                 </>
               ) : (
                 <>
-                  <Send className="h-6 w-6" />
-                  <span>Envoyer la demande</span>
+                  <Send className="h-6 w-6 text-white" />
+                  <span className="text-white">Envoyer</span>
                 </>
               )}
             </button>
 
-            {/* Info */}
-            <div className="text-center text-psg-blue-100 text-sm space-y-2">
-              <p>✅ Ryless recevra ta demande instantanément</p>
-              <p>📱 Réponse très rapide garantie !</p>
-            </div>
           </form>
         </div>
       </div>

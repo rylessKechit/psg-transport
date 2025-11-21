@@ -3,124 +3,95 @@
 
 import { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
-import { Plus, Phone, Mail, Clock } from 'lucide-react';
+import { Plus, Phone, History, Clock } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Horloge temps réel
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative overflow-hidden">
-        {/* Logo PSG en watermark subtil et propre */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div 
-            className="w-80 h-80 opacity-5 bg-no-repeat bg-center bg-contain"
-            style={{
-              backgroundImage: "url('/logo-psg-watermark.webp')",
-              filter: 'blur(0.5px)',
-            }}
-          />
-        </div>
+      <div className="h-full flex flex-col justify-between">
 
-        {/* Background pattern subtil */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full"></div>
-          <div className="absolute top-32 right-20 w-20 h-20 border border-white/10 rounded-full"></div>
-          <div className="absolute bottom-20 left-20 w-40 h-40 border border-white/10 rounded-full"></div>
-          <div className="absolute bottom-40 right-10 w-24 h-24 border border-white/15 rounded-full"></div>
-        </div>
-        
-        <div className="relative z-10 px-4 pt-8 pb-8">
-          {/* Header avec salutation */}
-          <div className="text-center space-y-4 mb-12">
-            <div className="mb-6">
-              <h1 className="text-4xl font-bold text-white font-satoshi mb-2 tracking-tight leading-tight">
-                Salut Jordan ! 👋
-              </h1>
-              <div className="text-psg-blue-100 font-jakarta">
-                <div className="text-lg font-medium tracking-wide">
-                  {currentTime.toLocaleDateString('fr-FR', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long'
+        {/* Contenu principal - spacing PLUS GRAND */}
+        <div className="container-compact relative z-10 flex flex-col justify-between h-full py-8">
+          
+          {/* SECTION 1: Salutation PLUS GRANDE */}
+          <div className="text-center text-white-forced">
+            <h1 className="font-playfair text-4xl font-bold text-white mb-4">
+              Salut Jordan ! 👋
+            </h1>
+            <div className="text-white">
+              <div className="text-xl font-medium text-white font-playfair mb-2">
+                {currentTime.toLocaleDateString('fr-FR', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long'
+                })}
+              </div>
+              <div className="text-2xl font-bold flex items-center justify-center space-x-3 text-white">
+                <Clock className="h-6 w-6 text-yellow-300" />
+                <span className="font-playfair text-white">
+                  {currentTime.toLocaleTimeString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
                   })}
-                </div>
-                <div className="text-2xl font-semibold text-white mt-1 flex items-center justify-center space-x-2 tracking-wider">
-                  <Clock className="h-5 w-5" />
-                  <span className="font-mono">
-                    {currentTime.toLocaleTimeString('fr-FR', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </span>
-                </div>
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Action principale */}
-          <div className="text-center mb-8">
-            <p className="text-psg-blue-100 text-lg mb-6 font-medium font-jakarta tracking-wide">
-              Besoin d'un transport ?
+          {/* SECTION 2: Action principale PLUS GRANDE */}
+          <div className="text-center space-large">
+            <p className="text-white text-2xl font-medium font-playfair mb-6">
+              Besoin d'un transport pour le PSG ?
             </p>
+            
             <Link href="/request">
-              <button className="w-full max-w-sm mx-auto bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-semibold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400 font-satoshi tracking-wide">
-                <Plus className="h-8 w-8" />
+              <button className="btn-psg text-xl font-playfair py-6">
+                <Plus className="h-7 w-7" />
                 <span>Demander une course</span>
+              </button>
+            </Link>
+
+            {/* Info PLUS GRANDE */}
+            <div className="card-simple p-6">
+              <h3 className="font-playfair font-bold text-gray-900 mb-4 text-xl">
+                Comment ça marche ?
+              </h3>
+              <div className="text-gray-700 text-lg space-y-3 font-playfair">
+                <p className="text-gray-700">• Formulaire simple</p>
+                <p className="text-gray-700">• Email instantané</p>
+                <p className="text-gray-700">• Confirmation rapide ✅</p>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 3: Actions secondaires PLUS GRANDES */}
+          <div className="flex justify-center space-x-4">
+            <a 
+              href="tel:+33123456789" 
+              className="flex items-center space-x-3 bg-white/95 backdrop-blur-sm text-gray-900 font-semibold px-6 py-4 rounded-xl border border-white/80 hover:bg-white transition-all duration-200 shadow-lg font-playfair text-lg"
+            >
+              <Phone className="h-5 w-5 text-blue-600" />
+              <span className="text-gray-900">Appeler</span>
+            </a>
+
+            <Link href="/history">
+              <button className="flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/40 hover:bg-white/30 transition-all duration-200 shadow-lg font-playfair text-lg">
+                <History className="h-5 w-5 text-yellow-300" />
+                <span className="text-white">Historique</span>
               </button>
             </Link>
           </div>
 
-          {/* Message d'information */}
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 mx-auto max-w-sm shadow-2xl border border-white/20 mb-8">
-            <div className="text-center">
-              <div className="bg-psg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-8 w-8 text-psg-blue-600" />
-              </div>
-              <h3 className="font-bold text-psg-blue-900 mb-3 text-lg">
-                Comment ça marche ?
-              </h3>
-              <div className="text-psg-blue-800 text-sm leading-relaxed space-y-2">
-                <p>• Tu remplis le formulaire simple</p>
-                <p>• Je reçois ta demande par email</p>
-                <p>• Confirmation très rapide ! ✅</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact rapide */}
-          <div className="text-center space-y-4">
-            <p className="text-psg-blue-200 text-sm mb-4 font-medium">
-              Urgence ou question ?
-            </p>
-            <a 
-              href="tel:+33123456789" 
-              className="inline-flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105 mb-4"
-            >
-              <Phone className="h-5 w-5" />
-              <span>Appeler Ryless</span>
-            </a>
-
-            {/* Lien vers l'historique */}
-            <div>
-              <Link href="/history">
-                <button className="inline-flex items-center space-x-3 bg-psg-blue-600/50 backdrop-blur-sm text-white font-medium px-6 py-3 rounded-xl border border-psg-blue-400/50 hover:bg-psg-blue-600/70 transition-all duration-300 transform hover:scale-105">
-                  <Clock className="h-5 w-5" />
-                  <span>Voir mes courses</span>
-                </button>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </Layout>

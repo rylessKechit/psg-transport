@@ -8,11 +8,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-screen flex flex-col">
       <Header />
-      
-      {/* Contenu principal */}
-      <main className="relative z-10">
+      <main className="flex-1 overflow-hidden">
         {children}
       </main>
     </div>
