@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   description: 'Application de transport pour Jordan',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
   themeColor: '#004170',
-  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.ico',
   },
