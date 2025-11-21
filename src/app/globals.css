@@ -1,26 +1,286 @@
-@import "tailwindcss";
+/* Import Google Fonts pour PSG */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* shadcn/ui CSS Variables */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 200 100% 22%; /* Bleu PSG en HSL */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 200 100% 22%; /* Bleu PSG */
+    --radius: 0.5rem;
+
+    /* Variables PSG personnalisées */
+    --psg-blue: #004170;
+    --psg-blue-light: #556bff;
+    --psg-red: #E1000F;
+    --psg-gold: #FFD700;
+    --psg-gradient: linear-gradient(135deg, #004170 0%, #556bff 100%);
+    --psg-shadow: 0 4px 20px rgba(0, 65, 112, 0.15);
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 200 100% 40%; /* Bleu PSG plus clair en dark mode */
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 200 100% 40%;
+
+    /* Variables PSG dark mode */
+    --psg-blue: #556bff;
+    --psg-blue-light: #7e93ff;
+    --psg-red: #ff4757;
+    --psg-gold: #FFD700;
+    --psg-gradient: linear-gradient(135deg, #556bff 0%, #7e93ff 100%);
+    --psg-shadow: 0 4px 20px rgba(85, 107, 255, 0.2);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Styles de base optimisés pour mobile */
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  /* Amélioration des interactions tactiles */
+  button, 
+  [role="button"],
+  input,
+  select,
+  textarea {
+    @apply touch-manipulation;
+  }
+
+  /* Focus visible amélioré pour l'accessibilité */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-psg-blue-500;
+  }
+}
+
+@layer components {
+  /* Composants PSG personnalisés */
+  .btn-psg-primary {
+    @apply bg-psg-blue-900 hover:bg-psg-blue-800 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-psg hover:shadow-lg hover:scale-105 active:scale-95;
+  }
+
+  .btn-psg-secondary {
+    @apply bg-white hover:bg-gray-50 text-psg-blue-900 font-medium px-6 py-3 rounded-lg border-2 border-psg-blue-900 transition-all duration-200 hover:bg-psg-blue-900 hover:text-white;
+  }
+
+  .btn-psg-gold {
+    @apply bg-psg-gold hover:bg-yellow-500 text-psg-blue-900 font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .card-psg {
+    @apply bg-white rounded-xl shadow-psg border border-gray-100 p-6 transition-all duration-200 hover:shadow-xl;
+  }
+
+  .input-psg {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-colors duration-200 placeholder-gray-400;
+  }
+
+  .select-psg {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-colors duration-200 bg-white;
+  }
+
+  /* Container pour les pages principales */
+  .container-psg {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Header PSG */
+  .header-psg {
+    @apply bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm;
+  }
+
+  /* Layout pour mobile */
+  .mobile-layout {
+    @apply min-h-screen bg-gray-50 pb-safe-area-inset-bottom;
+  }
+
+  /* Animations pour les notifications */
+  .notification-enter {
+    @apply animate-slide-in;
+  }
+
+  .notification-success {
+    @apply bg-green-50 border-green-200 text-green-800;
+  }
+
+  .notification-error {
+    @apply bg-red-50 border-red-200 text-red-800;
+  }
+
+  .notification-psg {
+    @apply bg-psg-blue-50 border-psg-blue-200 text-psg-blue-900;
+  }
+}
+
+@layer utilities {
+  /* Utilities PSG personnalisées */
+  .text-psg-gradient {
+    background: linear-gradient(135deg, var(--psg-blue) 0%, var(--psg-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-psg-gradient {
+    background: var(--psg-gradient);
+  }
+
+  .shadow-psg {
+    box-shadow: var(--psg-shadow);
+  }
+
+  /* Safe area pour iPhone */
+  .pb-safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pt-safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Scroll personnalisé */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-psg::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-psg::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  .scrollbar-psg::-webkit-scrollbar-thumb {
+    background: var(--psg-blue);
+    border-radius: 3px;
+  }
+
+  .scrollbar-psg::-webkit-scrollbar-thumb:hover {
+    background: var(--psg-blue-light);
+  }
+
+  /* Animations personnalisées */
+  .animate-pulse-psg {
+    animation: pulse-psg 2s infinite;
+  }
+
+  @keyframes pulse-psg {
+    0%, 100% {
+      background-color: var(--psg-blue);
+      transform: scale(1);
+    }
+    50% {
+      background-color: var(--psg-blue-light);
+      transform: scale(1.05);
+    }
+  }
+
+  /* States interactifs améliorés */
+  .interactive {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .interactive:hover {
+    @apply scale-105;
+  }
+
+  .interactive:active {
+    @apply scale-95;
+  }
+
+  /* Glass effect pour les overlays */
+  .glass-psg {
+    @apply backdrop-blur-md bg-white/80 border border-white/20 shadow-lg;
+  }
+
+  /* Responsive text sizing */
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+}
+
+/* Styles spécifiques pour les composants shadcn/ui */
+.toast[data-state="open"][data-swipe-direction="right"] {
+  animation: slide-in 150ms ease-out;
+}
+
+/* Print styles pour les rapports futurs */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-psg {
+    @apply text-black bg-white;
+  }
+}
+
+/* Styles pour les PWA (futur) */
+@media (display-mode: standalone) {
+  .pwa-header {
+    @apply pt-safe-area-inset-top;
+  }
 }

@@ -1,65 +1,102 @@
-import Image from "next/image";
+// app/page.tsx
+'use client';
 
-export default function Home() {
+import { useState, useEffect } from 'react';
+import Layout from '../components/layout/Layout';
+import { Plus, Phone, Mail, Clock } from 'lucide-react';
+import Link from 'next/link';
+
+export default function HomePage() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Horloge temps réel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <Layout>
+      <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
+        
+        <div className="relative z-10 px-4 pt-8 pb-8">
+          {/* Header avec salutation */}
+          <div className="text-center space-y-4 mb-12">
+            <div className="mb-6">
+              <h1 className="text-4xl font-bold text-white font-psg mb-2">
+                Salut Jordan ! 👋
+              </h1>
+              <div className="text-psg-blue-100">
+                <div className="text-lg font-medium">
+                  {currentTime.toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long'
+                  })}
+                </div>
+                <div className="text-2xl font-mono font-bold text-white mt-1 flex items-center justify-center space-x-2">
+                  <Clock className="h-5 w-5" />
+                  <span>
+                    {currentTime.toLocaleTimeString('fr-FR', {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action principale */}
+          <div className="text-center mb-8">
+            <p className="text-psg-blue-100 text-lg mb-6 font-medium">
+              Besoin d'un transport ?
+            </p>
+            <Link href="/request">
+              <button className="w-full max-w-sm mx-auto bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-bold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400">
+                <Plus className="h-8 w-8" />
+                <span>Demander une course</span>
+              </button>
+            </Link>
+          </div>
+
+          {/* Message d'information */}
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 mx-auto max-w-sm shadow-2xl border border-white/20 mb-8">
+            <div className="text-center">
+              <div className="bg-psg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="h-8 w-8 text-psg-blue-600" />
+              </div>
+              <h3 className="font-bold text-psg-blue-900 mb-3 text-lg">
+                Comment ça marche ?
+              </h3>
+              <div className="text-psg-blue-800 text-sm leading-relaxed space-y-2">
+                <p>• Tu remplis le formulaire simple</p>
+                <p>• Je reçois ta demande par email</p>
+                <p>• Confirmation très rapide ! ✅</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact rapide */}
+          <div className="text-center">
+            <p className="text-psg-blue-200 text-sm mb-4 font-medium">
+              Urgence ou question ?
+            </p>
+            <a 
+              href="tel:+33123456789" 
+              className="inline-flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <Phone className="h-5 w-5" />
+              <span>Appeler Ryless</span>
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }

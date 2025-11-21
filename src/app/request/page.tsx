@@ -1,0 +1,255 @@
+// app/request/page.tsx
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Layout from '../../components/layout/Layout';
+import { Calendar, Clock, MapPin, MessageSquare, Send, ArrowLeft, Loader2, CalendarIcon } from 'lucide-react';
+import Link from 'next/link';
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const locations = [
+  { 
+    id: 'campus', 
+    name: 'Campus PSG', 
+    wazeLink: 'https://waze.com/ul/hu09qmbevr'
+  },
+  { 
+    id: 'domicile', 
+    name: 'Domicile', 
+    wazeLink: 'https://waze.com/ul/hu09tkg0mu'
+  }
+];
+
+const timeSlots = [
+  '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
+  '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
+  '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30',
+  '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'
+];
+
+export default function RequestPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState<Date | undefined>();
+  const [formData, setFormData] = useState({
+    time: '',
+    departure: '',
+    destination: '',
+    notes: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!date || !formData.time || !formData.departure || !formData.destination) {
+      alert('Merci de remplir tous les champs obligatoires !');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/rides', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date: date.toISOString(),
+          time: formData.time,
+          departure: formData.departure,
+          destination: formData.destination,
+          notes: formData.notes
+        })
+      });
+
+      if (response.ok) {
+        // Succès !
+        alert('🎉 Course demandée avec succès ! Tu recevras une confirmation très bientôt.');
+        router.push('/');
+      } else {
+        throw new Error('Erreur lors de l\'envoi');
+      }
+    } catch (error) {
+      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Ryless.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Layout>
+      <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative">
+        <div className="relative z-10 px-4 pt-6 pb-8">
+          {/* Header avec retour */}
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/" className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="font-medium">Retour</span>
+            </Link>
+            <h1 className="text-xl font-bold text-white font-psg">Nouvelle course</h1>
+            <div className="w-16"></div>
+          </div>
+
+          {/* Formulaire */}
+          <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
+            {/* Date avec Calendar Picker */}
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
+                <Calendar className="h-5 w-5 text-psg-blue-600" />
+                <span>Date de la course *</span>
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full h-14 justify-start text-left font-normal text-lg border border-gray-200 rounded-xl hover:border-psg-blue-500 focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-3 h-5 w-5 text-psg-blue-600" />
+                    {date ? format(date, "EEEE dd MMMM yyyy", { locale: fr }) : "Choisir une date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <CalendarComponent
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                    locale={fr}
+                    className="rounded-md border-0"
+                    classNames={{
+                      day_selected: "bg-psg-blue-600 text-white hover:bg-psg-blue-700",
+                      day_today: "bg-psg-blue-100 text-psg-blue-900 font-semibold",
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Heure */}
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
+                <Clock className="h-5 w-5 text-psg-blue-600" />
+                <span>Heure *</span>
+              </label>
+              <Select value={formData.time} onValueChange={(value) => setFormData({...formData, time: value})}>
+                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
+                  <SelectValue placeholder="Choisir l'heure" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60">
+                  {timeSlots.map(time => (
+                    <SelectItem key={time} value={time} className="text-lg py-3">
+                      {time}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Départ */}
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
+                <MapPin className="h-5 w-5 text-psg-blue-600" />
+                <span>Point de départ *</span>
+              </label>
+              <Select value={formData.departure} onValueChange={(value) => setFormData({...formData, departure: value})}>
+                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
+                  <SelectValue placeholder="D'où pars-tu ?" />
+                </SelectTrigger>
+                <SelectContent>
+                  {locations.map(location => (
+                    <SelectItem key={location.id} value={location.name} className="text-lg py-3">
+                      <div className="flex items-center space-x-2">
+                        <span>{location.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Destination */}
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
+                <MapPin className="h-5 w-5 text-psg-red" />
+                <span>Destination *</span>
+              </label>
+              <Select value={formData.destination} onValueChange={(value) => setFormData({...formData, destination: value})}>
+                <SelectTrigger className="w-full h-14 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200">
+                  <SelectValue placeholder="Où vas-tu ?" />
+                </SelectTrigger>
+                <SelectContent>
+                  {locations.map(location => (
+                    <SelectItem key={location.id} value={location.name} className="text-lg py-3">
+                      <div className="flex items-center space-x-2">
+                        <span>{location.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Notes (optionnel) */}
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
+              <label className="flex items-center space-x-3 text-psg-blue-900 font-semibold mb-4">
+                <MessageSquare className="h-5 w-5 text-psg-blue-600" />
+                <span>Notes (optionnel)</span>
+              </label>
+              <textarea
+                value={formData.notes}
+                onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                placeholder="Ex: Match important, bagages, heure précise..."
+                className="w-full p-4 text-lg border border-gray-200 rounded-xl focus:border-psg-blue-500 focus:ring-2 focus:ring-psg-blue-200 transition-all duration-200 min-h-[100px] resize-none"
+                rows={3}
+              />
+            </div>
+
+            {/* Bouton d'envoi */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-psg-red to-red-600 hover:from-red-600 hover:to-psg-red text-white font-bold text-xl py-6 px-8 rounded-2xl shadow-2xl hover:shadow-red-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 border-2 border-red-400 disabled:opacity-50 disabled:transform-none disabled:hover:shadow-none"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                  <span>Envoi en cours...</span>
+                </>
+              ) : (
+                <>
+                  <Send className="h-6 w-6" />
+                  <span>Envoyer la demande</span>
+                </>
+              )}
+            </button>
+
+            {/* Info */}
+            <div className="text-center text-psg-blue-100 text-sm space-y-2">
+              <p>✅ Ryless recevra ta demande instantanément</p>
+              <p>📱 Réponse très rapide garantie !</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Layout>
+  );
+}
