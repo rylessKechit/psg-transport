@@ -42,7 +42,7 @@ function generateEmailHTML(rideData: any) {
   // Mapping des liens Waze
   const getWazeLink = (location: string) => {
     if (location === 'Campus PSG') return 'https://waze.com/ul/hu09qmbevr';
-    if (location === 'Domicile') return 'https://waze.com/ul/hu09tkg0mu';
+    if (location === 'Domicile Jordan') return 'https://waze.com/ul/hu09tkg0mu';
     return '#';
   };
 
@@ -229,10 +229,10 @@ export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
     
-    // Récupérer les courses futures
-    const rides = await Ride.find({
-      date: { $gte: new Date() }
-    }).sort({ date: 1, time: 1 });
+    // Récupérer toutes les courses, triées par date décroissante
+    const rides = await Ride.find({})
+      .sort({ date: -1, time: -1 })
+      .limit(50); // Limiter à 50 courses pour éviter la surcharge
 
     return NextResponse.json({ rides });
   } catch (error) {

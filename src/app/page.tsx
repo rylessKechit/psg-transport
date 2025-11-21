@@ -22,7 +22,7 @@ export default function HomePage() {
     <Layout>
       <div className="min-h-screen bg-gradient-to-br from-psg-blue-900 via-psg-blue-800 to-psg-blue-900 relative overflow-hidden">
         {/* Background pattern */}
-        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
+        <div className="absolute inset-0 opacity-10"></div>
         
         <div className="relative z-10 px-4 pt-8 pb-8">
           {/* Header avec salutation */}
@@ -83,17 +83,27 @@ export default function HomePage() {
           </div>
 
           {/* Contact rapide */}
-          <div className="text-center">
+          <div className="text-center space-y-4">
             <p className="text-psg-blue-200 text-sm mb-4 font-medium">
               Urgence ou question ?
             </p>
             <a 
-              href="tel:+33123456789" 
-              className="inline-flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105"
+              href="tel:+33680807979" 
+              className="inline-flex items-center space-x-3 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-4 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105 mb-4"
             >
               <Phone className="h-5 w-5" />
-              <span>Appeler Ryless</span>
+              <span>Appeler Curtis</span>
             </a>
+
+            {/* Lien vers l'historique */}
+            <div>
+              <Link href="/history">
+                <button className="inline-flex items-center space-x-3 bg-psg-blue-600/50 backdrop-blur-sm text-white font-medium px-6 py-3 rounded-xl border border-psg-blue-400/50 hover:bg-psg-blue-600/70 transition-all duration-300 transform hover:scale-105">
+                  <Clock className="h-5 w-5" />
+                  <span>Voir mes courses</span>
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

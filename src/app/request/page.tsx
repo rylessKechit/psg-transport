@@ -86,7 +86,7 @@ export default function RequestPage() {
         throw new Error('Erreur lors de l\'envoi');
       }
     } catch (error) {
-      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Ryless.');
+      alert('❌ Erreur lors de l\'envoi. Essaie à nouveau ou appelle Curtis.');
     } finally {
       setLoading(false);
     }
@@ -244,7 +244,7 @@ export default function RequestPage() {
 
             {/* Info */}
             <div className="text-center text-psg-blue-100 text-sm space-y-2">
-              <p>✅ Ryless recevra ta demande instantanément</p>
+              <p>✅ Curtis recevra ta demande instantanément</p>
               <p>📱 Réponse très rapide garantie !</p>
             </div>
           </form>
