@@ -20,6 +20,14 @@ export default function HomePage() {
     <Layout>
       <div className="h-full flex flex-col justify-between">
 
+        {/* GROS LOGO PSG EN ARRIÈRE-PLAN */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none psg-watermark">
+          <div 
+            className="w-96 h-96 bg-no-repeat bg-center bg-contain"
+            style={{ backgroundImage: "url('/logo-psg-watermark.webp')" }}
+          />
+        </div>
+
         {/* Contenu principal - spacing PLUS GRAND */}
         <div className="container-compact relative z-10 flex flex-col justify-between h-full py-8">
           
@@ -63,13 +71,13 @@ export default function HomePage() {
 
             {/* Info PLUS GRANDE */}
             <div className="card-simple p-6">
-              <h3 className="font-playfair font-bold text-gray-900 mb-4 text-xl">
+              <h3 className="font-playfair font-bold text-slate-800 mb-4 text-xl">
                 Comment ça marche ?
               </h3>
-              <div className="text-gray-700 text-lg space-y-3 font-playfair">
-                <p className="text-gray-700">• Formulaire simple</p>
-                <p className="text-gray-700">• Email instantané</p>
-                <p className="text-gray-700">• Confirmation rapide ✅</p>
+              <div className="text-slate-600 text-lg space-y-3 font-playfair">
+                <p className="text-slate-600">• Formulaire simple</p>
+                <p className="text-slate-600">• Email instantané</p>
+                <p className="text-slate-600">• Confirmation rapide ✅</p>
               </div>
             </div>
           </div>
@@ -78,10 +86,10 @@ export default function HomePage() {
           <div className="flex justify-center space-x-4">
             <a 
               href="tel:+33123456789" 
-              className="flex items-center space-x-3 bg-white/95 backdrop-blur-sm text-gray-900 font-semibold px-6 py-4 rounded-xl border border-white/80 hover:bg-white transition-all duration-200 shadow-lg font-playfair text-lg"
+              className="flex items-center space-x-3 bg-white backdrop-blur-sm text-slate-900 font-semibold px-6 py-4 rounded-xl border-0 hover:bg-slate-50 transition-all duration-200 shadow-2xl font-playfair text-lg"
             >
               <Phone className="h-5 w-5 text-blue-600" />
-              <span className="text-gray-900">Appeler</span>
+              <span className="text-slate-900">Appeler</span>
             </a>
 
             <Link href="/history">

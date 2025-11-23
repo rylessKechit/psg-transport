@@ -7,7 +7,6 @@
 
 @layer base {
   :root {
-    /* Variables de base */
     --background: 0 0% 100%;
     --foreground: 240 10% 15%;
     --card: 0 0% 100%;
@@ -29,18 +28,16 @@
     --ring: 200 100% 22%;
     --radius: 0.5rem;
 
-    /* VRAIS couleurs PSG */
-    --psg-blue: #004070;     /* Bleu PSG officiel CORRECT */
-    --psg-blue-dark: #002040; /* Plus foncé */
-    --psg-red: #E1000F;      /* Rouge PSG */
-    --psg-gold: #FFD700;     /* Or PSG */
+    /* PSG + COULEURS MODERNES */
+    --psg-blue: #004070;
+    --psg-red: #E1000F;
+    --psg-gold: #FFD700;
   }
 
   * {
     @apply border-border;
   }
 
-  /* Background avec overlay PLUS TRANSPARENT */
   html, body {
     margin: 0;
     padding: 0;
@@ -49,12 +46,12 @@
     background: 
       linear-gradient(
         135deg, 
-        rgba(0, 64, 112, 0.70) 0%, 
-        rgba(0, 32, 64, 0.65) 50%, 
-        rgba(0, 64, 112, 0.70) 100%
+        rgba(0, 64, 112, 0.75) 0%, 
+        rgba(0, 32, 64, 0.70) 50%, 
+        rgba(0, 64, 112, 0.75) 100%
       ),
       url('/logo-psg-watermark.png');
-    background-size: auto, 425px 425px;
+    background-size: auto, 600px 600px;
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;
     background-attachment: fixed, fixed;
@@ -76,52 +73,87 @@
 }
 
 @layer components {
-  /* Bouton principal PSG */
+  /* Bouton PSG compact */
   .btn-psg {
-    @apply w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl transform hover:scale-105;
+    background: linear-gradient(135deg, #E1000F 0%, #ff1744 100%);
+    @apply w-full text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 shadow-xl hover:shadow-red-500/30 transform hover:scale-105;
   }
 
-  /* Card avec fond BLANC et texte NOIR - contraste parfait */
-  .card-simple {
-    @apply bg-white/95 backdrop-blur-sm rounded-xl border border-white/80 shadow-xl;
-    color: #1a1a2e !important;
+  /* CARDS COMPACTES mais modernes */
+  .card-compact {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    @apply backdrop-blur-lg rounded-2xl border border-blue-200 shadow-lg hover:shadow-blue-500/10 transition-all duration-300;
+    color: #1f2937 !important;
   }
 
-  .card-simple * {
-    color: #1a1a2e !important;
+  .card-compact * {
+    color: #1f2937 !important;
   }
 
-  .card-simple h3 {
-    color: #1a1a2e !important;
+  .card-compact h3 {
+    color: #1f2937 !important;
   }
 
-  .card-simple p {
-    color: #4a5568 !important;
+  .card-compact p {
+    color: #374151 !important;
   }
 
-  .card-simple input,
-  .card-simple select,
-  .card-simple textarea,
-  .card-simple button {
-    color: #1a1a2e !important;
+  /* LABELS COMPACTS */
+  .label-compact {
+    @apply font-semibold text-base mb-3 flex items-center space-x-2;
+    color: #1f2937 !important;
   }
 
-  /* Select avec texte NOIR visible */
-  .card-simple [role="combobox"] {
-    color: #1a1a2e !important;
-    background-color: white !important;
+  /* SELECTS COMPACTS mais stylés */
+  .select-compact {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+    border: 2px solid #3b82f6 !important;
+    color: #1f2937 !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    padding: 12px 16px !important;
+    min-height: 48px !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1) !important;
+    transition: all 0.2s ease !important;
   }
 
-  .card-simple [role="combobox"] * {
-    color: #1a1a2e !important;
+  .select-compact:hover {
+    border-color: #2563eb !important;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.15) !important;
   }
 
-  /* Container compact */
+  .select-compact * {
+    color: #1f2937 !important;
+  }
+
+  /* INPUTS COMPACTS */
+  .input-compact {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+    border: 2px solid #10b981 !important;
+    color: #1f2937 !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    padding: 12px 16px !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .input-compact:focus {
+    border-color: #059669 !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15) !important;
+  }
+
+  .input-compact::placeholder {
+    color: #6b7280 !important;
+  }
+
+  /* Container compact pour mobile */
   .container-compact {
-    @apply max-w-md mx-auto px-4;
+    @apply max-w-sm mx-auto px-3;
   }
 
-  /* Textes forcés blancs sur fond bleu */
   .text-white-forced {
     color: white !important;
   }
@@ -130,33 +162,83 @@
     color: white !important;
   }
 
-  /* Espaces plus grands pour textes plus gros */
-  .space-large {
-    @apply space-y-6;
+  /* Espaces COMPACTS */
+  .space-compact {
+    @apply space-y-4;
   }
 
-  /* Boutons History avec meilleurs contrastes */
+  /* Boutons historique compacts */
   .btn-history-active {
-    @apply bg-white text-gray-900 shadow-lg border-2 border-blue-600;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    @apply text-white shadow-lg border-0 font-semibold rounded-xl px-6 py-3 text-sm;
   }
 
   .btn-history-inactive {
-    @apply bg-transparent text-white border-2 border-white/50 hover:bg-white/20;
+    @apply bg-white/15 text-white border border-white/30 hover:bg-white/25 font-medium rounded-xl px-6 py-3 text-sm transition-all duration-300;
   }
 }
 
-/* Animation watermark - plus subtile */
+/* Animation */
 @keyframes gentle-pulse {
   0%, 100% { 
-    opacity: 0.25;
+    opacity: 0.3;
     transform: scale(1);
   }
   50% { 
-    opacity: 0.35;
+    opacity: 0.4;
     transform: scale(1.01);
   }
 }
 
 .psg-watermark {
-  animation: gentle-pulse 10s ease-in-out infinite;
+  animation: gentle-pulse 12s ease-in-out infinite;
+}
+
+/* FORCE pour les selects - COMPACT */
+[role="combobox"] {
+  color: #1f2937 !important;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+  border: 2px solid #3b82f6 !important;
+  border-radius: 12px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  padding: 12px 16px !important;
+  min-height: 48px !important;
+}
+
+[role="combobox"]:hover {
+  border-color: #2563eb !important;
+}
+
+[data-radix-select-trigger] {
+  color: #1f2937 !important;
+}
+
+[data-radix-select-value] {
+  color: #1f2937 !important;
+  font-weight: 500 !important;
+}
+
+[data-radix-select-trigger] span {
+  color: #1f2937 !important;
+}
+
+.select-content {
+  background: white !important;
+  border: 2px solid #3b82f6 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.select-item {
+  color: #1f2937 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  padding: 12px 16px !important;
+  transition: all 0.2s ease !important;
+}
+
+.select-item:hover {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+  color: #1e40af !important;
 }
