@@ -1,9 +1,9 @@
-// app/history/page.tsx
+// app/history/page.tsx - VERSION FINALE MODERNE
 'use client';
 
 import { useState, useEffect } from 'react';
 import Layout from '../../components/layout/Layout';
-import { Calendar, Clock, MapPin, ArrowLeft, Loader2, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowLeft, Loader2, CheckCircle, XCircle, AlertCircle, Plus, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
 interface Ride {
@@ -43,13 +43,13 @@ export default function HistoryPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
       case 'completed':
-        return <CheckCircle className="h-4 w-4 text-blue-600" />;
+        return <CheckCircle className="h-4 w-4 text-blue-500" />;
       case 'cancelled':
-        return <XCircle className="h-4 w-4 text-red-600" />;
+        return <XCircle className="h-4 w-4 text-red-500" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-yellow-600" />;
+        return <AlertCircle className="h-4 w-4 text-yellow-500" />;
     }
   };
 
@@ -69,13 +69,13 @@ export default function HistoryPage() {
   const getStatusBg = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'status-confirmed';
       case 'completed':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'status-completed';
       case 'cancelled':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'status-cancelled';
       default:
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'status-pending';
     }
   };
 
@@ -108,10 +108,10 @@ export default function HistoryPage() {
   if (loading) {
     return (
       <Layout>
-        <div className="h-full flex items-center justify-center">
-          <div className="text-white text-center">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-            <p className="font-playfair text-xl">Chargement des courses...</p>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="loading-container">
+            <Loader2 className="h-8 w-8 animate-spin text-white mb-4" />
+            <p className="text-white text-xl font-playfair">Chargement des courses...</p>
           </div>
         </div>
       </Layout>
@@ -120,33 +120,45 @@ export default function HistoryPage() {
 
   return (
     <Layout>
-      <div className="h-full overflow-y-auto">
-        <div className="container-compact relative z-10 py-6">
-          {/* Header PLUS GRAND */}
-          <div className="flex items-center justify-between mb-6">
-            <Link href="/" className="flex items-center space-x-2 text-white hover:text-yellow-300">
-              <ArrowLeft className="h-6 w-6" />
-              <span className="font-medium font-playfair text-lg">Retour</span>
+      <div className="min-h-screen overflow-y-auto">
+
+        {/* LOGO PSG EN ARRIÈRE-PLAN */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
+          <div 
+            className="w-96 h-96 bg-no-repeat bg-center bg-contain"
+            style={{ backgroundImage: "url('/logo-psg-watermark.webp')" }}
+          />
+        </div>
+
+        <div className="container-modern relative z-10 py-6">
+          
+          {/* Header moderne */}
+          <div className="page-header">
+            <Link href="/" className="back-button">
+              <ArrowLeft className="h-5 w-5" />
+              <span>Retour</span>
             </Link>
-            <h1 className="font-playfair text-2xl font-bold text-white">Historique</h1>
+            <h1 className="page-title">Historique</h1>
             <div className="w-20"></div>
           </div>
 
-          {/* Stats PLUS GRANDES */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="card-simple p-5 text-center">
-              <div className="text-3xl font-bold text-gray-900 font-playfair">{upcomingCount}</div>
-              <div className="text-lg text-gray-600 font-playfair">À venir</div>
+          {/* Stats modernes */}
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-number">{upcomingCount}</div>
+              <div className="stat-label">À venir</div>
+              <div className="stat-accent bg-green-500"></div>
             </div>
-            <div className="card-simple p-5 text-center">
-              <div className="text-3xl font-bold text-gray-900 font-playfair">{pastCount}</div>
-              <div className="text-lg text-gray-600 font-playfair">Passées</div>
+            <div className="stat-card">
+              <div className="stat-number">{pastCount}</div>
+              <div className="stat-label">Passées</div>
+              <div className="stat-accent bg-blue-500"></div>
             </div>
           </div>
 
-          {/* Filtres AMÉLIORÉS avec MEILLEURS contrastes */}
-          <div className="flex justify-center mb-6">
-            <div className="flex space-x-2">
+          {/* Filtres modernes */}
+          <div className="filter-container">
+            <div className="filter-buttons">
               {[
                 { key: 'all', label: 'Toutes' },
                 { key: 'upcoming', label: 'À venir' },
@@ -155,11 +167,7 @@ export default function HistoryPage() {
                 <button
                   key={key}
                   onClick={() => setFilter(key as any)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 font-playfair text-lg border-2 ${
-                    filter === key 
-                      ? 'btn-history-active' 
-                      : 'btn-history-inactive'
-                  }`}
+                  className={`filter-btn ${filter === key ? 'filter-btn-active' : 'filter-btn-inactive'}`}
                 >
                   {label}
                 </button>
@@ -167,86 +175,80 @@ export default function HistoryPage() {
             </div>
           </div>
 
-          {/* Liste des courses PLUS GRANDE */}
-          <div className="space-large">
+          {/* Liste des courses */}
+          <div className="rides-list">
             {filteredRides.length === 0 ? (
-              <div className="card-simple p-8 text-center">
-                <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="font-playfair font-bold text-gray-700 mb-4 text-2xl">
+              <div className="empty-state">
+                <Calendar className="h-16 w-16 text-white/50 mx-auto mb-4" />
+                <h3 className="empty-title">
                   {filter === 'upcoming' ? 'Aucune course à venir' : 
                    filter === 'past' ? 'Aucune course passée' : 'Aucune course'}
                 </h3>
-                <p className="text-gray-500 mb-6 font-playfair text-lg">
+                <p className="empty-description">
                   {filter === 'all' ? 'Jordan n\'a pas encore programmé de course.' : ''}
                 </p>
                 <Link href="/request">
-                  <button className="bg-psg-red text-white px-8 py-4 rounded-xl font-semibold hover:bg-red-600 transition-colors font-playfair text-lg">
+                  <button className="empty-action-btn">
+                    <Plus className="h-5 w-5" />
                     Programmer une course
                   </button>
                 </Link>
               </div>
             ) : (
               filteredRides.map((ride) => (
-                <div key={ride._id} className="card-simple p-6 shadow-lg">
-                  {/* En-tête PLUS GROS */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="h-6 w-6 text-psg-blue" />
-                      <span className="text-lg font-medium text-gray-700 font-playfair">
-                        {formatDate(ride.date)}
-                      </span>
+                <div key={ride._id} className="ride-card group">
+                  
+                  {/* Header de la card */}
+                  <div className="ride-header">
+                    <div className="ride-date">
+                      <Calendar className="h-5 w-5 text-white/80" />
+                      <span>{formatDate(ride.date)}</span>
                     </div>
-                    <div className={`flex items-center space-x-2 px-3 py-2 rounded-full border font-semibold ${getStatusBg(ride.status)}`}>
+                    <div className={`ride-status ${getStatusBg(ride.status)}`}>
                       {getStatusIcon(ride.status)}
-                      <span className="font-playfair text-sm">
-                        {getStatusText(ride.status)}
-                      </span>
+                      <span>{getStatusText(ride.status)}</span>
                     </div>
                   </div>
 
-                  {/* Heure PLUS GRANDE */}
-                  <div className="flex items-center space-x-3 mb-4">
-                    <Clock className="h-6 w-6 text-psg-blue" />
-                    <span className="text-2xl font-bold text-gray-900 font-playfair">
-                      {ride.time}
-                    </span>
+                  {/* Heure avec badge à venir */}
+                  <div className="ride-time-section">
+                    <div className="ride-time">
+                      <Clock className="h-5 w-5 text-white/80" />
+                      <span className="time-text">{ride.time}</span>
+                    </div>
                     {isUpcoming(ride.date, ride.time) && (
-                      <span className="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm font-medium font-playfair">
+                      <div className="upcoming-badge">
                         À venir
-                      </span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Trajet PLUS GROS */}
-                  <div className="bg-gradient-to-r from-green-50 to-red-50 p-5 rounded-xl mb-4">
-                    <div className="flex items-center justify-between text-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-4 h-4 bg-green-600 rounded-full"></div>
-                        <span className="font-medium text-gray-900 font-playfair">{ride.departure}</span>
-                      </div>
-                      <div className="flex-1 border-t-2 border-dashed border-gray-400 mx-4"></div>
-                      <div className="flex items-center space-x-3">
-                        <span className="font-medium text-red-600 font-playfair">{ride.destination}</span>
-                        <div className="w-4 h-4 bg-red-600 rounded-full"></div>
-                      </div>
+                  {/* Trajet moderne */}
+                  <div className="ride-route">
+                    <div className="route-point route-start">
+                      <div className="route-dot bg-green-500"></div>
+                      <span>{ride.departure}</span>
+                    </div>
+                    <div className="route-line"></div>
+                    <div className="route-point route-end">
+                      <span>{ride.destination}</span>
+                      <div className="route-dot bg-red-500"></div>
                     </div>
                   </div>
 
-                  {/* Notes PLUS GRANDES */}
+                  {/* Notes si présentes */}
                   {ride.notes && (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                      <div className="flex items-start space-x-3">
-                        <MapPin className="h-5 w-5 text-yellow-600 mt-1" />
-                        <div>
-                          <div className="text-sm font-medium text-yellow-800 mb-2 font-playfair">Notes :</div>
-                          <div className="text-lg text-yellow-700 font-playfair">{ride.notes}</div>
-                        </div>
+                    <div className="ride-notes">
+                      <div className="notes-header">
+                        <MessageSquare className="h-4 w-4 text-orange-400" />
+                        <span>Notes :</span>
                       </div>
+                      <div className="notes-content">{ride.notes}</div>
                     </div>
                   )}
 
-                  {/* Date de création PLUS GRANDE */}
-                  <div className="text-sm text-gray-500 text-center font-playfair">
+                  {/* Footer avec date de création */}
+                  <div className="ride-footer">
                     Demandée le {new Date(ride.createdAt).toLocaleDateString('fr-FR', {
                       day: 'numeric',
                       month: 'long',
@@ -254,21 +256,21 @@ export default function HistoryPage() {
                       minute: '2-digit'
                     })}
                   </div>
+
                 </div>
               ))
             )}
           </div>
 
-          {/* Bouton flottant PLUS GROS */}
+          {/* Bouton flottant pour nouvelle course */}
           {filteredRides.length > 0 && (
-            <div className="fixed bottom-8 right-6 z-50">
-              <Link href="/request">
-                <button className="bg-gradient-to-r from-psg-red to-red-600 text-white p-5 rounded-full shadow-2xl hover:shadow-red-500/25 transform hover:scale-110 transition-all duration-300">
-                  <Calendar className="h-8 w-8" />
-                </button>
-              </Link>
-            </div>
+            <Link href="/request">
+              <button className="floating-action-btn">
+                <Plus className="h-6 w-6" />
+              </button>
+            </Link>
           )}
+
         </div>
       </div>
     </Layout>

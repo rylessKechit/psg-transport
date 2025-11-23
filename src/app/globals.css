@@ -1,10 +1,14 @@
-/* Import Google Fonts + Playfair Display */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap');
+/* CSS MODERNE - DESIGN ÉPURÉ REFAIT DE ZÉRO */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+   BASE STYLES MODERNES
+=========================== */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -27,11 +31,6 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 200 100% 22%;
     --radius: 0.5rem;
-
-    /* PSG + COULEURS MODERNES */
-    --psg-blue: #004070;
-    --psg-red: #E1000F;
-    --psg-gold: #FFD700;
   }
 
   * {
@@ -41,204 +40,314 @@
   html, body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     overflow-x: hidden;
-    background: 
-      linear-gradient(
-        135deg, 
-        rgba(0, 64, 112, 0.75) 0%, 
-        rgba(0, 32, 64, 0.70) 50%, 
-        rgba(0, 64, 112, 0.75) 100%
-      ),
-      url('/logo-psg-watermark.png');
-    background-size: auto, 600px 600px;
-    background-position: center, center;
-    background-repeat: no-repeat, no-repeat;
-    background-attachment: fixed, fixed;
-    font-family: 'Playfair Display', serif;
-    color: white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
-    color: white;
     margin: 0;
+    letter-spacing: -0.025em;
   }
 
   p, span, div {
     margin: 0;
-    color: white;
+  }
+
+  button {
+    font-family: 'Inter', sans-serif;
   }
 }
 
+/* ===========================
+   LAYOUT COMPONENTS
+=========================== */
 @layer components {
-  /* Bouton PSG compact */
-  .btn-psg {
-    background: linear-gradient(135deg, #E1000F 0%, #ff1744 100%);
-    @apply w-full text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 shadow-xl hover:shadow-red-500/30 transform hover:scale-105;
+  
+  /* Layout principal sans background fixe */
+  .layout-modern {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
   }
 
-  /* CARDS COMPACTES mais modernes */
-  .card-compact {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    @apply backdrop-blur-lg rounded-2xl border border-blue-200 shadow-lg hover:shadow-blue-500/10 transition-all duration-300;
-    color: #1f2937 !important;
+  /* Container responsive moderne */
+  .container-modern {
+    max-width: 28rem; /* 448px */
+    margin: 0 auto;
+    padding: 0 1rem;
+    width: 100%;
   }
 
-  .card-compact * {
-    color: #1f2937 !important;
+  /* ===========================
+     BUTTONS MODERNES
+  =========================== */
+  
+  /* Bouton principal CTA */
+  .btn-primary-modern {
+    @apply w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-red-500/25 flex items-center justify-center gap-3;
   }
 
-  .card-compact h3 {
-    color: #1f2937 !important;
+  /* Boutons secondaires */
+  .btn-secondary-modern {
+    @apply bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 border border-white/20;
   }
 
-  .card-compact p {
-    color: #374151 !important;
+  .btn-white-modern {
+    @apply bg-white/90 hover:bg-white text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg;
   }
 
-  /* LABELS COMPACTS */
-  .label-compact {
-    @apply font-semibold text-base mb-3 flex items-center space-x-2;
-    color: #1f2937 !important;
+  /* ===========================
+     FORM ELEMENTS MODERNES
+  =========================== */
+  
+  /* Inputs et selects propres */
+  .input-modern {
+    @apply w-full bg-white border border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl p-3 transition-all text-gray-900 placeholder-gray-500;
   }
 
-  /* SELECTS COMPACTS mais stylés */
-  .select-compact {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
-    border: 2px solid #3b82f6 !important;
-    color: #1f2937 !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    padding: 12px 16px !important;
-    min-height: 48px !important;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1) !important;
-    transition: all 0.2s ease !important;
+  .input-modern:focus {
+    outline: none;
   }
 
-  .select-compact:hover {
-    border-color: #2563eb !important;
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.15) !important;
+  /* Labels modernes */
+  .label-modern {
+    @apply block text-white text-sm font-medium mb-2 flex items-center gap-2;
   }
 
-  .select-compact * {
-    color: #1f2937 !important;
+  /* Select trigger moderne */
+  .select-modern {
+    @apply w-full bg-white border-gray-200 hover:bg-gray-50 h-12 rounded-xl text-gray-900 border hover:border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all;
   }
 
-  /* INPUTS COMPACTS */
-  .input-compact {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
-    border: 2px solid #10b981 !important;
-    color: #1f2937 !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    padding: 12px 16px !important;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1) !important;
-    transition: all 0.2s ease !important;
+  /* ===========================
+     CARDS ET CONTAINERS
+  =========================== */
+  
+  /* Card de base moderne */
+  .card-modern {
+    @apply bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10;
   }
 
-  .input-compact:focus {
-    border-color: #059669 !important;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15) !important;
+  /* Card info avec bordure colorée */
+  .info-card-modern {
+    @apply bg-white/5 backdrop-blur-md rounded-2xl p-5 border border-white/10;
   }
 
-  .input-compact::placeholder {
-    color: #6b7280 !important;
+  /* Card temps/date */
+  .time-card-modern {
+    @apply bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 mx-auto max-w-xs;
   }
 
-  /* Container compact pour mobile */
-  .container-compact {
-    @apply max-w-sm mx-auto px-3;
+  /* ===========================
+     STEPS ET LISTES
+  =========================== */
+  
+  /* Step moderne simple */
+  .step-modern {
+    @apply flex items-center gap-3;
   }
 
-  .text-white-forced {
-    color: white !important;
+  .step-number-modern {
+    @apply w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold;
   }
 
-  .text-white-forced * {
-    color: white !important;
+  .step-content-modern {
+    @apply flex-1;
   }
 
-  /* Espaces COMPACTS */
-  .space-compact {
-    @apply space-y-4;
+  .step-title-modern {
+    @apply text-white text-sm font-medium;
   }
 
-  /* Boutons historique compacts */
-  .btn-history-active {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    @apply text-white shadow-lg border-0 font-semibold rounded-xl px-6 py-3 text-sm;
+  .step-description-modern {
+    @apply text-white/70 text-xs;
   }
 
-  .btn-history-inactive {
-    @apply bg-white/15 text-white border border-white/30 hover:bg-white/25 font-medium rounded-xl px-6 py-3 text-sm transition-all duration-300;
+  /* ===========================
+     ANIMATIONS SUBTILES
+  =========================== */
+  
+  /* Hover subtil */
+  .hover-lift {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Scale au hover */
+  .hover-scale {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  /* ===========================
+     UTILITIES SPÉCIFIQUES
+  =========================== */
+  
+  /* Gradient de fond moderne */
+  .bg-gradient-modern {
+    background: linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a);
+  }
+
+  /* Shadow moderne */
+  .shadow-modern {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Border moderne avec blur */
+  .border-blur {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  /* ===========================
+     FIXES SHADCN UI
+  =========================== */
+  
+  /* Select content moderne */
+  [data-radix-select-content] {
+    @apply bg-white rounded-xl shadow-xl border-gray-200;
+  }
+
+  [data-radix-select-item] {
+    @apply hover:bg-gray-50 text-gray-900 cursor-pointer;
+  }
+
+  /* Popover content moderne */
+  [data-radix-popover-content] {
+    @apply bg-white rounded-xl shadow-xl border-gray-200;
+  }
+
+  /* Calendar moderne */
+  .rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #3b82f6;
+  }
+
+  /* ===========================
+     RESPONSIVE MODERNE
+  =========================== */
+  
+  @media (max-width: 640px) {
+    .container-modern {
+      padding: 0 1rem;
+    }
+
+    .btn-primary-modern {
+      @apply py-3 text-base;
+    }
+
+    .input-modern {
+      @apply text-base; /* Évite le zoom sur iOS */
+    }
+
+    .select-modern {
+      @apply h-11 text-base;
+    }
+  }
+
+  /* ===========================
+     DARK MODE READY (optionnel)
+  =========================== */
+  
+  @media (prefers-color-scheme: dark) {
+    .auto-dark {
+      /* Variables pour dark mode si nécessaire */
+    }
+  }
+
+  /* ===========================
+     PERFORMANCE OPTIMIZATIONS
+  =========================== */
+  
+  /* GPU acceleration pour les animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Réduction des repaints */
+  .optimize-paint {
+    contain: layout style paint;
   }
 }
 
-/* Animation */
-@keyframes gentle-pulse {
-  0%, 100% { 
-    opacity: 0.3;
-    transform: scale(1);
+/* ===========================
+   ÉTATS GLOBAUX
+=========================== */
+
+/* Focus visible moderne */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Sélection de texte */
+::selection {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: inherit;
+}
+
+/* Scrollbar moderne (webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===========================
+   PRINT STYLES (optionnel)
+=========================== */
+
+@media print {
+  .no-print {
+    display: none !important;
   }
-  50% { 
-    opacity: 0.4;
-    transform: scale(1.01);
+  
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
   }
 }
 
-.psg-watermark {
-  animation: gentle-pulse 12s ease-in-out infinite;
+/* Header principal avec le MÊME bleu que ta page */
+.header-ysg {
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a) !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* FORCE pour les selects - COMPACT */
-[role="combobox"] {
-  color: #1f2937 !important;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
-  border: 2px solid #3b82f6 !important;
-  border-radius: 12px !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  padding: 12px 16px !important;
-  min-height: 48px !important;
+.header-title {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 700 !important;
+  color: white !important;
 }
 
-[role="combobox"]:hover {
-  border-color: #2563eb !important;
-}
-
-[data-radix-select-trigger] {
-  color: #1f2937 !important;
-}
-
-[data-radix-select-value] {
-  color: #1f2937 !important;
-  font-weight: 500 !important;
-}
-
-[data-radix-select-trigger] span {
-  color: #1f2937 !important;
-}
-
-.select-content {
-  background: white !important;
-  border: 2px solid #3b82f6 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-}
-
-.select-item {
-  color: #1f2937 !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  padding: 12px 16px !important;
-  transition: all 0.2s ease !important;
-}
-
-.select-item:hover {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
-  color: #1e40af !important;
+.header-subtitle {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2) !important;
+  opacity: 0.9 !important;
+  color: white !important;
 }

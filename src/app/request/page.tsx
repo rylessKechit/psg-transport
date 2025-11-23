@@ -1,4 +1,4 @@
-// app/request/page.tsx
+// app/request/page.tsx - DESIGN ÉPURÉ REFAIT DE ZÉRO
 'use client';
 
 import { useState } from 'react';
@@ -25,8 +25,8 @@ import {
 } from "@/components/ui/select";
 
 const locations = [
-  { id: 'campus', name: 'Campus PSG', wazeLink: 'https://waze.com/ul/hu09qmbevr' },
-  { id: 'domicile', name: 'Domicile Jordan', wazeLink: 'https://waze.com/ul/hu09tkg0mu' }
+  { id: 'campus', name: 'Campus PSG' },
+  { id: 'domicile', name: 'Domicile Jordan' }
 ];
 
 const timeSlots = [
@@ -85,92 +85,69 @@ export default function RequestPage() {
 
   return (
     <Layout>
-      <div className="h-full overflow-y-auto">
-
-        {/* LOGO PSG EN ARRIÈRE-PLAN */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none psg-watermark">
-          <div 
-            className="w-96 h-96 bg-no-repeat bg-center bg-contain"
-            style={{ backgroundImage: "url('/logo-psg-watermark.webp')" }}
-          />
+      <div className="min-h-screen bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900">
+        
+        {/* Header propre */}
+        <div className="flex items-center justify-between p-4">
+          <Link href="/" className="flex items-center gap-2 text-white hover:text-white/80 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Retour</span>
+          </Link>
+          <h1 className="text-xl font-bold text-white">Nouvelle Course</h1>
+          <div className="w-16"></div>
         </div>
 
-        <div className="container-compact relative z-10 py-4">
-          {/* Header COMPACT */}
-          <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="flex items-center space-x-2 text-white hover:text-yellow-300 transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="font-medium font-playfair text-sm">Retour</span>
-            </Link>
-            <h1 className="font-playfair text-lg font-bold text-white">Nouvelle Course</h1>
-            <div className="w-16"></div>
-          </div>
-
-          {/* Formulaire COMPACT pour mobile */}
-          <form onSubmit={handleSubmit} className="space-compact">
+        {/* Formulaire épuré */}
+        <div className="px-4 max-w-sm mx-auto">
+          <form onSubmit={handleSubmit} className="space-y-4">
             
             {/* Date */}
-            <div className="card-compact p-4">
-              <label className="label-compact font-playfair">
-                <Calendar className="h-4 w-4 text-blue-600" />
-                <span>Date *</span>
+            <div>
+              <label className="block text-white text-sm font-medium mb-2 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-400" />
+                Date *
               </label>
+              
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant={"outline"}
-                    className="select-compact w-full font-playfair"
-                    style={{ 
-                      color: '#1f2937', 
-                      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-                      border: '2px solid #3b82f6',
-                      borderRadius: '12px',
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      padding: '12px 16px',
-                      minHeight: '48px'
-                    }}
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start bg-white border-gray-200 hover:bg-gray-50 h-12 rounded-xl text-gray-900",
+                      !date && "text-gray-500"
+                    )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-blue-600" />
-                    <span style={{ color: '#1f2937' }}>
-                      {date ? format(date, "dd/MM/yyyy", { locale: fr }) : "Choisir une date"}
-                    </span>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP", { locale: fr }) : "Choisir une date"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-white rounded-xl shadow-xl border-gray-200">
                   <CalendarComponent
                     mode="single"
                     selected={date}
                     onSelect={setDate}
-                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                    initialFocus
                     locale={fr}
-                    className="rounded-xl border-0"
+                    defaultMonth={new Date()}
                   />
                 </PopoverContent>
               </Popover>
             </div>
 
             {/* Heure */}
-            <div className="card-compact p-4">
-              <label className="label-compact font-playfair">
-                <Clock className="h-4 w-4 text-purple-600" />
-                <span>Heure *</span>
+            <div>
+              <label className="block text-white text-sm font-medium mb-2 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-purple-400" />
+                Heure *
               </label>
+              
               <Select value={formData.time} onValueChange={(value) => setFormData({...formData, time: value})}>
-                <SelectTrigger className="select-compact w-full font-playfair">
-                  <SelectValue 
-                    placeholder="Choisir l'heure" 
-                    style={{ color: '#1f2937', fontWeight: '500' }}
-                  />
+                <SelectTrigger className="w-full bg-white border-gray-200 hover:bg-gray-50 h-12 rounded-xl text-gray-900">
+                  <SelectValue placeholder="Choisir l'heure" />
                 </SelectTrigger>
-                <SelectContent className="select-content">
+                <SelectContent className="bg-white rounded-xl shadow-xl border-gray-200 max-h-60">
                   {timeSlots.map(time => (
-                    <SelectItem 
-                      key={time} 
-                      value={time} 
-                      className="select-item font-playfair"
-                      style={{ color: '#1f2937' }}
-                    >
+                    <SelectItem key={time} value={time} className="hover:bg-gray-50 text-gray-900">
                       {time}
                     </SelectItem>
                   ))}
@@ -179,26 +156,19 @@ export default function RequestPage() {
             </div>
 
             {/* Départ */}
-            <div className="card-compact p-4">
-              <label className="label-compact font-playfair">
-                <MapPin className="h-4 w-4 text-emerald-600" />
-                <span>Départ *</span>
+            <div>
+              <label className="block text-white text-sm font-medium mb-2 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-green-400" />
+                Départ *
               </label>
+              
               <Select value={formData.departure} onValueChange={(value) => setFormData({...formData, departure: value})}>
-                <SelectTrigger className="select-compact w-full font-playfair">
-                  <SelectValue 
-                    placeholder="D'où ?" 
-                    style={{ color: '#1f2937', fontWeight: '500' }}
-                  />
+                <SelectTrigger className="w-full bg-white border-gray-200 hover:bg-gray-50 h-12 rounded-xl text-gray-900">
+                  <SelectValue placeholder="Lieu de départ" />
                 </SelectTrigger>
-                <SelectContent className="select-content">
+                <SelectContent className="bg-white rounded-xl shadow-xl border-gray-200">
                   {locations.map(location => (
-                    <SelectItem 
-                      key={location.id} 
-                      value={location.name} 
-                      className="select-item font-playfair"
-                      style={{ color: '#1f2937' }}
-                    >
+                    <SelectItem key={location.id} value={location.name} className="hover:bg-gray-50 text-gray-900">
                       {location.name}
                     </SelectItem>
                   ))}
@@ -207,26 +177,19 @@ export default function RequestPage() {
             </div>
 
             {/* Destination */}
-            <div className="card-compact p-4">
-              <label className="label-compact font-playfair">
-                <MapPin className="h-4 w-4 text-red-600" />
-                <span>Destination *</span>
+            <div>
+              <label className="block text-white text-sm font-medium mb-2 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-red-400" />
+                Destination *
               </label>
+              
               <Select value={formData.destination} onValueChange={(value) => setFormData({...formData, destination: value})}>
-                <SelectTrigger className="select-compact w-full font-playfair">
-                  <SelectValue 
-                    placeholder="Vers où ?" 
-                    style={{ color: '#1f2937', fontWeight: '500' }}
-                  />
+                <SelectTrigger className="w-full bg-white border-gray-200 hover:bg-gray-50 h-12 rounded-xl text-gray-900">
+                  <SelectValue placeholder="Lieu de destination" />
                 </SelectTrigger>
-                <SelectContent className="select-content">
+                <SelectContent className="bg-white rounded-xl shadow-xl border-gray-200">
                   {locations.map(location => (
-                    <SelectItem 
-                      key={location.id} 
-                      value={location.name} 
-                      className="select-item font-playfair"
-                      style={{ color: '#1f2937' }}
-                    >
+                    <SelectItem key={location.id} value={location.name} className="hover:bg-gray-50 text-gray-900">
                       {location.name}
                     </SelectItem>
                   ))}
@@ -235,46 +198,40 @@ export default function RequestPage() {
             </div>
 
             {/* Notes */}
-            <div className="card-compact p-4">
-              <label className="label-compact font-playfair">
-                <MessageSquare className="h-4 w-4 text-orange-600" />
-                <span>Notes (optionnel)</span>
+            <div>
+              <label className="block text-white text-sm font-medium mb-2 flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-orange-400" />
+                Notes (optionnel)
               </label>
               <textarea
                 value={formData.notes}
                 onChange={(e) => setFormData({...formData, notes: e.target.value})}
                 placeholder="Notes rapides..."
-                className="input-compact w-full resize-none h-20 font-playfair"
-                style={{ 
-                  color: '#1f2937', 
-                  background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-                  border: '2px solid #10b981',
-                  borderRadius: '12px',
-                  fontSize: '16px',
-                  padding: '12px 16px'
-                }}
+                className="w-full bg-white border border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl p-3 h-20 resize-none transition-all text-gray-900 placeholder-gray-500"
                 rows={3}
               />
             </div>
 
-            {/* Bouton d'envoi COMPACT */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-psg font-playfair disabled:opacity-50 text-lg"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin text-white" />
-                  <span className="text-white">Envoi...</span>
-                </>
-              ) : (
-                <>
-                  <Send className="h-5 w-5 text-white" />
-                  <span className="text-white">Envoyer</span>
-                </>
-              )}
-            </button>
+            {/* Bouton submit */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:transform-none shadow-lg hover:shadow-red-500/25 flex items-center justify-center gap-3"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Envoi...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    <span>Envoyer</span>
+                  </>
+                )}
+              </button>
+            </div>
 
           </form>
         </div>
